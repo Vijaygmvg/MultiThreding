@@ -38,7 +38,7 @@ public class WaitAndNotifyDemo {
 
         synchronized(lock){
             System.out.println("helo form method two ");
-            //lock.notify();
+            lock.notify();
             System.out.println("helo the methjod 2 after the nofying ");
         }
 
