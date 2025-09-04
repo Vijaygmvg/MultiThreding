@@ -1,6 +1,9 @@
 package ThreadSysncronization.Deadlock;
 
 import java.beans.IntrospectionException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.concurrent.locks.*;
 
 public class DeadLockDemo {
@@ -45,5 +48,27 @@ public class DeadLockDemo {
      
     new Thread(demo::workerOne,"woker one").start();
     new Thread(demo::workerTwo,"worker two").start();
+    new Thread(()->{
+       ThreadMXBean mxBean=ManagementFactory.getThreadMXBean();
+       while(true){
+        long[] threadIds=mxBean.findDeadlockedThreads();
+          if(threadIds!=null){
+            System.out.println("deadlock is occured");
+            ThreadInfo threadInfo[]=mxBean.getThreadInfo(threadIds);
+            System.out.print(threadInfo);
+            for(long tId:threadIds){
+                System.out.println("thread with thread id"+tId);
+            }
+            break;
+          }
+          try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+       }
+   }).start();
    }
 }
