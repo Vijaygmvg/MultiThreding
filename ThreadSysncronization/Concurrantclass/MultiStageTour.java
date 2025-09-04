@@ -41,7 +41,7 @@ public class MultiStageTour {
         
     }
     public static void main(String[] args) {
-        for(int i=0;i<NUM_TOURIST;i++)
+        for(int i=0;i<20;i++)
         {
             Thread touristThread=new Thread(new Tourist(i));
             touristThread.start();
